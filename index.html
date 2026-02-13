@@ -316,6 +316,7 @@
         .project-card:nth-child(2)::before { background: linear-gradient(90deg, #00d4ff, #00e5a0); }
         .project-card:nth-child(3)::before { background: linear-gradient(90deg, #ff6b9d, #ffa46b); }
         .project-card:nth-child(4)::before { background: linear-gradient(90deg, #a78bfa, #6c63ff); }
+        .project-card:nth-child(5)::before { background: linear-gradient(90deg, #0097a7, #00d4ff); }
 
         .project-card:hover {
             transform: translateY(-6px);
@@ -399,6 +400,9 @@
         .tech-sklearn { background: rgba(243, 156, 18, 0.1); color: #f39c12; border: 1px solid rgba(243, 156, 18, 0.15); }
         .tech-pandas { background: rgba(21, 101, 192, 0.1); color: #428bca; border: 1px solid rgba(21, 101, 192, 0.15); }
         .tech-matplotlib { background: rgba(46, 204, 113, 0.1); color: #2ecc71; border: 1px solid rgba(46, 204, 113, 0.15); }
+        .tech-electron { background: rgba(71, 132, 143, 0.1); color: #47848f; border: 1px solid rgba(71, 132, 143, 0.15); }
+        .tech-javascript { background: rgba(247, 223, 30, 0.1); color: #f7df1e; border: 1px solid rgba(247, 223, 30, 0.15); }
+        .tech-mediapipe { background: rgba(0, 151, 167, 0.1); color: #0097a7; border: 1px solid rgba(0, 151, 167, 0.15); }
 
         .project-link {
             display: inline-flex;
@@ -485,6 +489,7 @@
         .stagger-children .fade-in:nth-child(2) { transition-delay: 0.1s; }
         .stagger-children .fade-in:nth-child(3) { transition-delay: 0.2s; }
         .stagger-children .fade-in:nth-child(4) { transition-delay: 0.3s; }
+        .stagger-children .fade-in:nth-child(5) { transition-delay: 0.4s; }
 
         /* ── Mobile Responsive ── */
         @media (max-width: 768px) {
@@ -591,7 +596,7 @@
             </div>
             <div class="about-stats stagger-children">
                 <div class="stat-card fade-in">
-                    <div class="stat-number">4</div>
+                    <div class="stat-number">5</div>
                     <div class="stat-label">AI Projects Built</div>
                 </div>
                 <div class="stat-card fade-in">
@@ -702,6 +707,27 @@
                     <span class="tech-badge tech-matplotlib">Matplotlib</span>
                 </div>
                 <a href="https://github.com/andrewpaik/data-analyst-agent" target="_blank" rel="noopener" class="project-link">
+                    View on GitHub
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l10-10"/><path d="M7 7h10v10"/></svg>
+                </a>
+            </div>
+
+            <!-- Project 5: Eye Tracking App -->
+            <div class="project-card fade-in">
+                <div class="project-number">05</div>
+                <h3>Eye Tracking App</h3>
+                <p class="description">Desktop eye tracking application using your webcam and MediaPipe Face Mesh. Tracks gaze in real-time and generates heatmap visualizations.</p>
+                <ul class="project-features">
+                    <li>Real-time gaze tracking via webcam</li>
+                    <li>Multi-point calibration system</li>
+                    <li>Heatmap visualization & session logging</li>
+                </ul>
+                <div class="tech-stack">
+                    <span class="tech-badge tech-electron">Electron</span>
+                    <span class="tech-badge tech-javascript">JavaScript</span>
+                    <span class="tech-badge tech-mediapipe">MediaPipe</span>
+                </div>
+                <a href="https://github.com/andrewpaik/eye-tracking-app" target="_blank" rel="noopener" class="project-link">
                     View on GitHub
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l10-10"/><path d="M7 7h10v10"/></svg>
                 </a>
