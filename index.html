@@ -378,6 +378,29 @@
             opacity: 1;
         }
 
+        .project-screenshot {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 1.25rem;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            position: relative;
+            aspect-ratio: 16 / 9;
+            background: var(--bg-secondary);
+        }
+
+        .project-screenshot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+            transition: transform 0.6s ease;
+        }
+
+        .project-card:hover .project-screenshot img {
+            transform: scale(1.03);
+        }
+
         .project-number {
             color: var(--text-secondary);
             font-size: 0.8rem;
@@ -680,6 +703,9 @@
 
             <!-- Project 1: Poker GTO Trainer -->
             <div class="project-card fade-in">
+                <div class="project-screenshot">
+                    <img src="screenshots/poker.png" alt="Poker GTO Trainer screenshot" loading="lazy" />
+                </div>
                 <div class="project-number">01</div>
                 <h3>Poker GTO Trainer</h3>
                 <p class="description">Real-time poker training app with AI-powered GTO strategy analysis. Practice optimal play and get instant feedback on your decisions.</p>
@@ -702,6 +728,9 @@
 
             <!-- Project 2: Neighborhood -->
             <div class="project-card fade-in">
+                <div class="project-screenshot">
+                    <img src="screenshots/neighborhood.png" alt="Neighborhood screenshot" loading="lazy" />
+                </div>
                 <div class="project-number">02</div>
                 <h3>Neighborhood</h3>
                 <p class="description">Social community platform connecting locals through group activities. Discover events, join groups, and build connections in your area.</p>
@@ -724,6 +753,9 @@
 
             <!-- Project 3: GTE Landing Page -->
             <div class="project-card fade-in">
+                <div class="project-screenshot">
+                    <img src="screenshots/gte.png" alt="GTE Landing Page screenshot" loading="lazy" />
+                </div>
                 <div class="project-number">03</div>
                 <h3>GTE Landing Page</h3>
                 <p class="description">Premium animated marketing landing page with glassmorphism design. Fluid animations and modern aesthetics that captivate visitors.</p>
@@ -745,6 +777,9 @@
 
             <!-- Project 4: Data Analyst Agent -->
             <div class="project-card fade-in">
+                <div class="project-screenshot">
+                    <img src="screenshots/data-analyst.png" alt="Data Analyst Agent screenshot" loading="lazy" />
+                </div>
                 <div class="project-number">04</div>
                 <h3>Data Analyst Agent</h3>
                 <p class="description">Autonomous AI system for end-to-end data analysis and reporting. Feed it data, get back insights, visualizations, and written reports.</p>
@@ -767,6 +802,9 @@
 
             <!-- Project 5: Eye Tracking App -->
             <div class="project-card fade-in">
+                <div class="project-screenshot">
+                    <img src="screenshots/eye-tracking.png" alt="Eye Tracking App heatmap output" loading="lazy" />
+                </div>
                 <div class="project-number">05</div>
                 <h3>Eye Tracking App</h3>
                 <p class="description">Desktop eye tracking application using your webcam and MediaPipe Face Mesh. Tracks gaze in real-time and generates heatmap visualizations.</p>
