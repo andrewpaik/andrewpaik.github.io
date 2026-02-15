@@ -41,7 +41,35 @@
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(0,0,0,0.06);
         }
-        .nav-name { font-size: 0.95rem; font-weight: 700; color: #1a1a1a; letter-spacing: -0.01em; }
+        .nav-name {
+            font-size: 0.95rem; font-weight: 800; letter-spacing: -0.02em;
+            color: #1a1a1a;
+            cursor: default;
+        }
+        .shimmer-text {
+            background: linear-gradient(90deg, currentColor 0%, currentColor 100%);
+            background-size: 100% 100%;
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .shimmer-text.shimmer-active {
+            background: linear-gradient(
+                90deg,
+                currentColor 0%, currentColor 15%,
+                #ffd97d 25%, #ffe8a8 32%, #fff8e7 40%, #ffffff 50%,
+                #fff8e7 60%, #ffe8a8 68%, #ffd97d 75%,
+                currentColor 85%, currentColor 100%
+            );
+            background-size: 400% 100%;
+            background-position: 120% 0;
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: goldShimmerHover 1.4s ease-in-out forwards;
+        }
+        @keyframes goldShimmerHover {
+            from { background-position: 120% 0; }
+            to { background-position: -120% 0; }
+        }
         .nav-links { display: flex; gap: 2.5rem; list-style: none; }
         .nav-links a {
             color: #666; text-decoration: none; font-weight: 500; font-size: 0.85rem;
@@ -442,22 +470,23 @@
             pointer-events: none;
         }
 
-        /* ── TRACK OVAL BACKGROUND ── */
-        .track-oval-bg {
+        /* ── SNAKING TRACK PATH ── */
+        .snake-track-wrap {
             position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 600px; height: 400px;
-            border: 2px solid rgba(196,92,60,0.04);
-            border-radius: 200px;
+            top: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 1060px;
+            height: 100%;
             pointer-events: none;
+            z-index: 0;
         }
-        .track-oval-bg::before {
-            content: '';
-            position: absolute; inset: 20px;
-            border: 1.5px solid rgba(196,92,60,0.03);
-            border-radius: 185px;
+        .snake-track-wrap svg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
         }
+        .project-card { position: relative; z-index: 1; }
 
         /* ── ABOUT ── */
         .about-section {
@@ -567,7 +596,7 @@
             .starting-blocks { display: none; }
             .scroll-track { display: none; }
             .bib-number { font-size: 3.5rem; }
-            .track-oval-bg { width: 400px; height: 280px; }
+            .snake-track-wrap { display: none; }
             .finish-line { margin: 2rem 1rem 0; }
         }
         @media (max-width: 480px) {
@@ -586,7 +615,7 @@
 <div class="gun-flash"></div>
 
 <nav id="main-nav">
-    <div class="nav-name">Andrew Paik</div>
+    <div class="nav-name shimmer-text">Andrew Paik</div>
     <ul class="nav-links">
         <li><a href="#projects">Projects</a></li>
         <li><a href="#about">About</a></li>
@@ -655,13 +684,30 @@
 <section class="projects-section" id="projects">
     <div class="projects-header fade-in">
         <div class="section-label">Laps Completed</div>
-        <h2 class="section-heading">What I've built</h2>
+        <h2 class="section-heading shimmer-text">What I've built</h2>
         <p class="section-sub">Each project built from starting blocks to finish line with AI-assisted development.</p>
     </div>
 
-    <!-- Subtle track oval behind projects -->
+    <!-- Snaking track behind projects -->
     <div style="position:relative;">
-        <div class="track-oval-bg"></div>
+        <div class="snake-track-wrap">
+            <svg viewBox="0 0 1060 2800" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Track surface (wide terracotta band — the red rubber) -->
+                <path d="M 530 0 C 530 120, 820 160, 820 280 C 820 400, 240 440, 240 560 C 240 680, 820 720, 820 840 C 820 960, 240 1000, 240 1120 C 240 1240, 820 1280, 820 1400 C 820 1520, 240 1560, 240 1680 C 240 1800, 820 1840, 820 1960 C 820 2080, 240 2120, 240 2240 C 240 2360, 820 2400, 820 2520 C 820 2640, 530 2680, 530 2800" stroke="#c45c3c" stroke-width="88" fill="none" opacity="0.10"/>
+
+                <!-- Lane lines — actual offset parallel paths (thin white painted lines) -->
+                <!-- Outer edge (left, offset -40) -->
+                <path d="M 490 0 C 490 120, 780 160, 780 280 C 780 400, 200 440, 200 560 C 200 680, 780 720, 780 840 C 780 960, 200 1000, 200 1120 C 200 1240, 780 1280, 780 1400 C 780 1520, 200 1560, 200 1680 C 200 1800, 780 1840, 780 1960 C 780 2080, 200 2120, 200 2240 C 200 2360, 780 2400, 780 2520 C 780 2640, 490 2680, 490 2800" stroke="white" stroke-width="1.5" fill="none" opacity="0.18"/>
+                <!-- Lane 1/2 divider (offset -20) -->
+                <path d="M 510 0 C 510 120, 800 160, 800 280 C 800 400, 220 440, 220 560 C 220 680, 800 720, 800 840 C 800 960, 220 1000, 220 1120 C 220 1240, 800 1280, 800 1400 C 800 1520, 220 1560, 220 1680 C 220 1800, 800 1840, 800 1960 C 800 2080, 220 2120, 220 2240 C 220 2360, 800 2400, 800 2520 C 800 2640, 510 2680, 510 2800" stroke="white" stroke-width="1" fill="none" opacity="0.14"/>
+                <!-- Center lane line (offset 0) -->
+                <path d="M 530 0 C 530 120, 820 160, 820 280 C 820 400, 240 440, 240 560 C 240 680, 820 720, 820 840 C 820 960, 240 1000, 240 1120 C 240 1240, 820 1280, 820 1400 C 820 1520, 240 1560, 240 1680 C 240 1800, 820 1840, 820 1960 C 820 2080, 240 2120, 240 2240 C 240 2360, 820 2400, 820 2520 C 820 2640, 530 2680, 530 2800" stroke="white" stroke-width="1" fill="none" opacity="0.14"/>
+                <!-- Lane 3/4 divider (offset +20) -->
+                <path d="M 550 0 C 550 120, 840 160, 840 280 C 840 400, 260 440, 260 560 C 260 680, 840 720, 840 840 C 840 960, 260 1000, 260 1120 C 260 1240, 840 1280, 840 1400 C 840 1520, 260 1560, 260 1680 C 260 1800, 840 1840, 840 1960 C 840 2080, 260 2120, 260 2240 C 260 2360, 840 2400, 840 2520 C 840 2640, 550 2680, 550 2800" stroke="white" stroke-width="1" fill="none" opacity="0.14"/>
+                <!-- Outer edge (right, offset +40) -->
+                <path d="M 570 0 C 570 120, 860 160, 860 280 C 860 400, 280 440, 280 560 C 280 680, 860 720, 860 840 C 860 960, 280 1000, 280 1120 C 280 1240, 860 1280, 860 1400 C 860 1520, 280 1560, 280 1680 C 280 1800, 860 1840, 860 1960 C 860 2080, 280 2120, 280 2240 C 280 2360, 860 2400, 860 2520 C 860 2640, 570 2680, 570 2800" stroke="white" stroke-width="1.5" fill="none" opacity="0.18"/>
+            </svg>
+        </div>
 
         <div class="project-card">
             <div class="project-media">
@@ -812,7 +858,7 @@
 <section class="about-section" id="about">
     <div class="fade-in">
         <div class="section-label">The Runner</div>
-        <h2 class="section-heading" style="text-align:center;">Built with AI,<br>shipped with care</h2>
+        <h2 class="section-heading shimmer-text" style="text-align:center;">Built with AI,<br>shipped with care</h2>
         <p class="section-sub" style="margin:0 auto 2.5rem; text-align:center;">A bit about how I work and what drives me.</p>
     </div>
     <div class="about-content fade-in">
@@ -843,7 +889,7 @@
 <section class="contact-section" id="contact">
     <div class="fade-in">
         <div class="section-label">Finish Line</div>
-        <h2 class="section-heading" style="text-align:center;">Let's connect</h2>
+        <h2 class="section-heading shimmer-text" style="text-align:center;">Let's connect</h2>
         <p class="section-sub" style="text-align:center;">Interested in collaborating or have a project in mind?</p>
     </div>
     <div class="contact-links fade-in">
@@ -902,6 +948,31 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
     document.querySelectorAll('.fade-in, .project-card').forEach(el => observer.observe(el));
+
+    // Shimmer on hover for hero h1
+    const heroH1 = document.querySelector('.hero h1');
+    heroH1.addEventListener('mouseenter', () => {
+        const lines = heroH1.querySelectorAll('.line');
+        lines.forEach((line, i) => {
+            line.style.animation = 'none';
+            void line.offsetWidth;
+            line.style.opacity = '1';
+            line.style.transform = 'translateX(0)';
+            line.style.animation = `goldSweep 1.6s ${i * 0.3}s ease-in-out forwards`;
+        });
+    });
+
+    // Shimmer on hover for nav name + section headings
+    document.querySelectorAll('.shimmer-text').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            el.classList.remove('shimmer-active');
+            void el.offsetWidth; // force reflow to restart animation
+            el.classList.add('shimmer-active');
+        });
+        el.addEventListener('mouseleave', () => {
+            el.classList.remove('shimmer-active');
+        });
+    });
 
     // Video hover
     document.querySelectorAll('.project-media').forEach(media => {
