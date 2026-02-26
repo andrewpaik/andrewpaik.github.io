@@ -1,41 +1,36 @@
 "use client";
 
-import { motion } from "framer-motion";
-import Tag from "@/components/ui/Tag";
-import ScrollReveal from "@/components/ui/ScrollReveal";
-
-const identityTags = [
+const marqueeItems = [
   "AI / ML",
   "Blockchain",
   "Data Science",
-  "Full-Stack",
-  "Finance",
+  "Full-Stack Dev",
+  "DeFi Research",
+  "Computer Vision",
+  "LLM Orchestration",
+  "USC Marshall",
+  "Growth Strategy",
+  "Python",
+  "TypeScript",
+  "React",
+  "Next.js",
 ];
 
 export default function QuickIntro() {
   return (
-    <section className="py-20">
-      <div className="mx-auto max-w-7xl px-6">
-        <ScrollReveal>
-          <p className="text-center text-[var(--color-text-secondary)] text-lg md:text-xl mb-8">
-            Andrew Paik &mdash; USC Marshall School of Business
-          </p>
-        </ScrollReveal>
-        <div className="flex flex-wrap justify-center gap-3">
-          {identityTags.map((tag, i) => (
-            <motion.div
-              key={tag}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{
-                delay: 0.1 + i * 0.08,
-                duration: 0.5,
-                ease: [0.25, 0.1, 0.25, 1.0],
-              }}
+    <section className="py-6 overflow-hidden border-y border-[var(--color-border)]">
+      <div className="relative">
+        <div className="animate-marquee flex whitespace-nowrap">
+          {[...marqueeItems, ...marqueeItems].map((item, i) => (
+            <span
+              key={i}
+              className="mx-8 font-[family-name:var(--font-mono)] text-xs uppercase tracking-[0.15em] text-[var(--color-text-muted)] flex items-center gap-8"
             >
-              <Tag variant="accent">{tag}</Tag>
-            </motion.div>
+              {item}
+              <span className="text-[var(--color-accent-primary)] opacity-40">
+                /
+              </span>
+            </span>
           ))}
         </div>
       </div>

@@ -8,20 +8,16 @@ import PersonalTouches from "@/components/sections/PersonalTouches";
 export const metadata: Metadata = {
   title: "About Me",
   description:
-    "Andrew Paik — USC student, AI developer, and blockchain researcher. Learn about my background, skills, and experience.",
+    "Andrew Paik — USC student, AI developer, and blockchain researcher. The long version.",
 };
 
 export default function AboutPage() {
   return (
     <>
       <AboutHero />
-      <div className="section-divider" />
       <Bio />
-      <div className="section-divider" />
       <SkillsGrid />
-      <div className="section-divider" />
       <Timeline />
-      <div className="section-divider" />
       <PersonalTouches />
     </>
   );

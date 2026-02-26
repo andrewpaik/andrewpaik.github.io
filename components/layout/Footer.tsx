@@ -16,14 +16,27 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[var(--color-bg-secondary)]">
-      <div className="section-divider" />
+    <footer className="border-t border-[var(--color-border)]">
       <div className="mx-auto max-w-7xl px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-12">
+          {/* Brand */}
+          <div>
+            <p className="font-[family-name:var(--font-display)] text-xl font-bold tracking-[-0.02em] mb-3">
+              Andrew Paik
+            </p>
+            <p className="text-[var(--color-text-muted)] text-sm leading-relaxed max-w-xs">
+              Making things that think.
+              <br />
+              Based in Los Angeles.
+            </p>
+          </div>
+
           {/* Navigation */}
           <div>
-            <p className="label mb-4">Navigation</p>
-            <div className="flex flex-col gap-3">
+            <p className="font-[family-name:var(--font-mono)] text-[0.65rem] uppercase tracking-[0.15em] text-[var(--color-text-muted)] mb-4">
+              Pages
+            </p>
+            <div className="flex flex-col gap-2.5">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
@@ -38,8 +51,10 @@ export default function Footer() {
 
           {/* Social */}
           <div>
-            <p className="label mb-4">Connect</p>
-            <div className="flex flex-col gap-3">
+            <p className="font-[family-name:var(--font-mono)] text-[0.65rem] uppercase tracking-[0.15em] text-[var(--color-text-muted)] mb-4">
+              Elsewhere
+            </p>
+            <div className="flex flex-col gap-2.5">
               {socialLinks.map((link) => (
                 <a
                   key={link.href}
@@ -53,21 +68,16 @@ export default function Footer() {
               ))}
             </div>
           </div>
-
-          {/* Tagline */}
-          <div>
-            <p className="label mb-4">Andrew Paik</p>
-            <p className="text-[var(--color-text-secondary)] text-sm leading-relaxed">
-              Building at the intersection of AI, blockchain, and real-world
-              impact. USC Marshall School of Business.
-            </p>
-          </div>
         </div>
 
-        <div className="section-divider mt-12 mb-6" />
-        <p className="font-[family-name:var(--font-mono)] text-xs text-[var(--color-text-muted)]">
-          &copy; {new Date().getFullYear()} Andrew Paik. All rights reserved.
-        </p>
+        <div className="border-t border-[var(--color-border)] mt-12 pt-6 flex flex-col md:flex-row justify-between gap-2">
+          <p className="font-[family-name:var(--font-mono)] text-[0.65rem] text-[var(--color-text-muted)]">
+            &copy; {new Date().getFullYear()} Andrew Paik
+          </p>
+          <p className="font-[family-name:var(--font-mono)] text-[0.65rem] text-[var(--color-text-muted)]">
+            Designed & built from scratch
+          </p>
+        </div>
       </div>
     </footer>
   );

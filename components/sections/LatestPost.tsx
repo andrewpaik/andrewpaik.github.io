@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import GlowBorder from "@/components/ui/GlowBorder";
 import Tag from "@/components/ui/Tag";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { blogPosts } from "@/lib/data/blog";
@@ -12,23 +11,48 @@ export default function LatestPost() {
   if (!latest) return null;
 
   return (
-    <section className="py-24">
+    <section className="py-28">
       <div className="mx-auto max-w-7xl px-6">
         <ScrollReveal>
-          <p className="label text-center mb-4">Latest Research</p>
-          <h2
-            className="font-[family-name:var(--font-display)] font-semibold tracking-[-0.01em] text-center mb-16"
-            style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)" }}
-          >
-            Recent Writing
-          </h2>
+          <div className="flex items-baseline justify-between mb-16">
+            <div>
+              <span className="section-number">02</span>
+              <h2
+                className="font-[family-name:var(--font-display)] font-bold tracking-[-0.03em] mt-2"
+                style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)" }}
+              >
+                Latest thinking
+              </h2>
+            </div>
+            <Link
+              href="/blog"
+              className="hidden md:flex items-center gap-2 text-[var(--color-text-secondary)] hover:text-[var(--color-accent-primary)] transition-colors text-sm link-hover"
+            >
+              All posts
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
+              </svg>
+            </Link>
+          </div>
         </ScrollReveal>
 
         <ScrollReveal>
-          <Link href={`/blog/${latest.slug}`} className="block max-w-3xl mx-auto">
-            <GlowBorder>
-              <div className="p-8">
-                <div className="flex items-center gap-4 mb-4">
+          <Link href={`/blog/${latest.slug}`} className="group block">
+            <div className="relative rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-8 md:p-12 overflow-hidden transition-all duration-500 hover:border-[var(--color-border-hover)]">
+              <div className="absolute inset-0 bg-gradient-to-br from-[rgba(123,97,255,0.04)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
+              <div className="relative">
+                <div className="flex items-center gap-4 mb-6">
                   <Tag variant="accent">{latest.category}</Tag>
                   <span className="font-[family-name:var(--font-mono)] text-xs text-[var(--color-text-muted)]">
                     {formatDate(latest.date)}
@@ -38,16 +62,19 @@ export default function LatestPost() {
                   </span>
                 </div>
 
-                <h3 className="font-[family-name:var(--font-display)] text-2xl md:text-3xl font-semibold mb-3 group-hover:text-[var(--color-accent-primary)] transition-colors">
+                <h3
+                  className="font-[family-name:var(--font-display)] font-bold tracking-[-0.02em] mb-4 group-hover:text-[var(--color-accent-primary)] transition-colors"
+                  style={{ fontSize: "clamp(1.75rem, 3.5vw, 2.75rem)" }}
+                >
                   {latest.title}
                 </h3>
 
-                <p className="text-[var(--color-text-secondary)] leading-relaxed mb-6">
+                <p className="text-[var(--color-text-secondary)] leading-relaxed max-w-2xl mb-8">
                   {latest.description}
                 </p>
 
-                <span className="text-[var(--color-accent-primary)] text-sm font-medium inline-flex items-center gap-2">
-                  Read Article
+                <span className="inline-flex items-center gap-2 text-[var(--color-accent-primary)] text-sm font-medium group-hover:gap-3 transition-all">
+                  Read the full piece
                   <svg
                     className="w-4 h-4"
                     fill="none"
@@ -63,7 +90,7 @@ export default function LatestPost() {
                   </svg>
                 </span>
               </div>
-            </GlowBorder>
+            </div>
           </Link>
         </ScrollReveal>
       </div>

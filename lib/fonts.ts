@@ -1,42 +1,14 @@
-import localFont from "next/font/local";
-import { JetBrains_Mono } from "next/font/google";
+import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 
-export const clashDisplay = localFont({
-  src: [
-    {
-      path: "../public/fonts/ClashDisplay-Medium.woff",
-      weight: "500",
-      style: "normal",
-    },
-    {
-      path: "../public/fonts/ClashDisplay-Semibold.woff",
-      weight: "600",
-      style: "normal",
-    },
-    {
-      path: "../public/fonts/ClashDisplay-Bold.woff",
-      weight: "700",
-      style: "normal",
-    },
-  ],
+export const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
   variable: "--font-display",
   display: "swap",
   preload: true,
 });
 
-export const generalSans = localFont({
-  src: [
-    {
-      path: "../public/fonts/GeneralSans-Regular.woff",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../public/fonts/GeneralSans-Medium.woff",
-      weight: "500",
-      style: "normal",
-    },
-  ],
+export const inter = Inter({
+  subsets: ["latin"],
   variable: "--font-body",
   display: "swap",
   preload: true,

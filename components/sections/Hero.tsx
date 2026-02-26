@@ -6,41 +6,51 @@ import Button from "@/components/ui/Button";
 import HeroBackground from "./HeroBackground";
 
 export default function Hero() {
-  const headlineRef = useRef<HTMLHeadingElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const line1Ref = useRef<HTMLDivElement>(null);
+  const line2Ref = useRef<HTMLDivElement>(null);
+  const line3Ref = useRef<HTMLDivElement>(null);
   const taglineRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const statusRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const headline = headlineRef.current;
-    if (!headline) return;
-
-    const words = headline.querySelectorAll(".hero-word");
-
-    const tl = gsap.timeline({ delay: 0.3 });
+    const tl = gsap.timeline({ delay: 0.4 });
 
     tl.fromTo(
-      words,
-      { opacity: 0, y: 40 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        stagger: 0.08,
-        ease: "power3.out",
-      }
+      statusRef.current,
+      { opacity: 0, y: 10 },
+      { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }
     );
+
+    [line1Ref, line2Ref, line3Ref].forEach((ref, i) => {
+      if (ref.current) {
+        tl.fromTo(
+          ref.current,
+          { opacity: 0, y: 60, clipPath: "inset(0 0 100% 0)" },
+          {
+            opacity: 1,
+            y: 0,
+            clipPath: "inset(0 0 0% 0)",
+            duration: 0.8,
+            ease: "power3.out",
+          },
+          `-=${i === 0 ? 0 : 0.5}`
+        );
+      }
+    });
 
     tl.fromTo(
       taglineRef.current,
-      { opacity: 0, y: 20 },
+      { opacity: 0, y: 15 },
       { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
-      "-=0.2"
+      "-=0.3"
     );
 
     tl.fromTo(
       ctaRef.current,
-      { opacity: 0, y: 20 },
+      { opacity: 0, y: 15 },
       { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
       "-=0.3"
     );
@@ -48,59 +58,80 @@ export default function Hero() {
     tl.fromTo(
       scrollRef.current,
       { opacity: 0 },
-      { opacity: 1, duration: 0.8 },
+      { opacity: 0.5, duration: 1 },
       "-=0.2"
     );
   }, []);
 
-  const headlineText =
-    "I Build at the Intersection of AI, Blockchain & Real-World Impact";
-  const words = headlineText.split(" ");
-
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center overflow-hidden">
       <HeroBackground />
 
-      {/* Headlight bloom gradient */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,212,255,0.06)_0%,transparent_70%)]" />
+      {/* Headlight bloom */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,212,255,0.05)_0%,transparent_60%)]" />
 
-      {/* Grid overlay */}
+      {/* Subtle grid */}
       <div
-        className="absolute inset-0 opacity-[0.03]"
+        className="absolute inset-0 opacity-[0.02]"
         style={{
           backgroundImage:
             "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
+          backgroundSize: "80px 80px",
         }}
       />
 
-      <div className="relative z-10 mx-auto max-w-5xl px-6 text-center">
-        <h1
-          ref={headlineRef}
-          className="font-[family-name:var(--font-display)] font-bold tracking-[-0.02em] leading-[1.1] mb-6"
-          style={{ fontSize: "clamp(2.5rem, 7vw, 6rem)" }}
-        >
-          {words.map((word, i) => (
-            <span key={i} className="hero-word inline-block opacity-0">
-              {word}
-              {i < words.length - 1 ? "\u00A0" : ""}
+      <div ref={containerRef} className="relative z-10 mx-auto max-w-7xl px-6 w-full py-32">
+        {/* Status pill */}
+        <div ref={statusRef} className="mb-8 opacity-0">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-secondary)]">
+            <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+            <span className="font-[family-name:var(--font-mono)] text-[0.65rem] text-[var(--color-text-secondary)]">
+              Currently building Serenity AI
             </span>
-          ))}
-        </h1>
+          </div>
+        </div>
+
+        {/* Headline — stacked lines, left-aligned, huge */}
+        <div className="mb-8">
+          <div ref={line1Ref} className="overflow-hidden opacity-0">
+            <h1
+              className="font-[family-name:var(--font-display)] font-bold tracking-[-0.04em] leading-[0.95]"
+              style={{ fontSize: "clamp(3rem, 8vw, 7.5rem)" }}
+            >
+              I make things
+            </h1>
+          </div>
+          <div ref={line2Ref} className="overflow-hidden opacity-0">
+            <h1
+              className="font-[family-name:var(--font-display)] font-bold tracking-[-0.04em] leading-[0.95]"
+              style={{ fontSize: "clamp(3rem, 8vw, 7.5rem)" }}
+            >
+              that <span className="gradient-text">think</span>.
+            </h1>
+          </div>
+          <div ref={line3Ref} className="overflow-hidden opacity-0 mt-2">
+            <p
+              className="font-[family-name:var(--font-display)] font-medium tracking-[-0.02em] text-[var(--color-text-muted)]"
+              style={{ fontSize: "clamp(1.2rem, 2.5vw, 2rem)" }}
+            >
+              And sometimes, they think back.
+            </p>
+          </div>
+        </div>
 
         <p
           ref={taglineRef}
-          className="text-[var(--color-text-secondary)] text-lg md:text-xl max-w-2xl mx-auto mb-10 opacity-0"
+          className="text-[var(--color-text-secondary)] text-base md:text-lg max-w-lg mb-10 opacity-0 leading-relaxed"
         >
-          USC Student &middot; AI Developer &middot; Blockchain Researcher
-          &middot; Growth Lead
+          Andrew Paik &mdash; AI developer, blockchain researcher, and USC
+          student who&apos;d rather build the future than wait for it.
         </p>
 
-        <div ref={ctaRef} className="opacity-0">
+        <div ref={ctaRef} className="flex items-center gap-6 opacity-0">
           <Button href="/projects">
-            Explore My Work
+            See my work
             <svg
-              className="w-4 h-4 transition-transform group-hover:translate-x-1"
+              className="w-4 h-4"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -113,6 +144,9 @@ export default function Hero() {
               />
             </svg>
           </Button>
+          <Button href="/about" variant="ghost">
+            About me
+          </Button>
         </div>
       </div>
 
@@ -121,10 +155,7 @@ export default function Hero() {
         ref={scrollRef}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-0"
       >
-        <span className="font-[family-name:var(--font-mono)] text-[0.65rem] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
-          Scroll
-        </span>
-        <div className="w-[1px] h-8 bg-gradient-to-b from-[var(--color-text-muted)] to-transparent animate-pulse" />
+        <div className="w-[1px] h-12 bg-gradient-to-b from-[var(--color-text-muted)] to-transparent" />
       </div>
     </section>
   );

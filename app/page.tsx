@@ -8,13 +8,9 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <div className="section-divider" />
       <QuickIntro />
-      <div className="section-divider" />
       <FeaturedProjects />
-      <div className="section-divider" />
       <LatestPost />
-      <div className="section-divider" />
       <ContactCTA />
     </>
   );

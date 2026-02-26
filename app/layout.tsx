@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { clashDisplay, generalSans, jetbrainsMono } from "@/lib/fonts";
+import { spaceGrotesk, inter, jetbrainsMono } from "@/lib/fonts";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import SmoothScroll from "@/components/layout/SmoothScroll";
@@ -41,7 +41,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${clashDisplay.variable} ${generalSans.variable} ${jetbrainsMono.variable}`}
+        className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`}
       >
         <SmoothScroll>
           <CustomCursor />
