@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import Tag from "@/components/ui/Tag";
 import ScrollReveal from "@/components/ui/ScrollReveal";
+import TiltCard from "@/components/ui/TiltCard";
 import { projects } from "@/lib/data/projects";
 
 const featured = projects.filter((p) => p.featured).slice(0, 3);
@@ -65,6 +66,7 @@ export default function FeaturedProjects() {
               }}
             >
               <Link href={`/projects/${project.slug}`} className="group block">
+                <TiltCard intensity={6} glare>
                 <div className="relative rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-6 md:p-8 overflow-hidden transition-all duration-500 hover:border-[var(--color-border-hover)] hover:shadow-[0_0_60px_rgba(0,212,255,0.04)]">
                   {/* Background gradient */}
                   <div
@@ -116,6 +118,7 @@ export default function FeaturedProjects() {
                     </svg>
                   </div>
                 </div>
+                </TiltCard>
               </Link>
             </motion.div>
           ))}

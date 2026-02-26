@@ -2,6 +2,7 @@
 
 import Button from "@/components/ui/Button";
 import ScrollReveal from "@/components/ui/ScrollReveal";
+import MagneticElement from "@/components/ui/MagneticElement";
 
 export default function ContactCTA() {
   return (
@@ -30,28 +31,32 @@ export default function ContactCTA() {
 
         <ScrollReveal delay={0.3}>
           <div className="flex items-center gap-4">
-            <Button href="/contact">
-              Reach out
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
+            <MagneticElement strength={0.25}>
+              <Button href="/contact">
+                Reach out
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </svg>
+              </Button>
+            </MagneticElement>
+            <MagneticElement strength={0.15}>
+              <a
+                href="mailto:andrew@example.com"
+                className="text-[var(--color-text-secondary)] hover:text-[var(--color-accent-primary)] transition-colors text-sm link-hover"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
-            </Button>
-            <a
-              href="mailto:andrew@example.com"
-              className="text-[var(--color-text-secondary)] hover:text-[var(--color-accent-primary)] transition-colors text-sm link-hover"
-            >
-              or just email me
-            </a>
+                or just email me
+              </a>
+            </MagneticElement>
           </div>
         </ScrollReveal>
       </div>

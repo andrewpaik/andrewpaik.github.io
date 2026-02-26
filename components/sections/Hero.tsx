@@ -2,8 +2,13 @@
 
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
+import dynamic from "next/dynamic";
 import Button from "@/components/ui/Button";
-import HeroBackground from "./HeroBackground";
+import MagneticElement from "@/components/ui/MagneticElement";
+
+const HeroScene = dynamic(() => import("@/components/three/HeroScene"), {
+  ssr: false,
+});
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -65,7 +70,7 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
-      <HeroBackground />
+      <HeroScene />
 
       {/* Headlight bloom */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,212,255,0.05)_0%,transparent_60%)]" />
@@ -128,25 +133,29 @@ export default function Hero() {
         </p>
 
         <div ref={ctaRef} className="flex items-center gap-6 opacity-0">
-          <Button href="/projects">
-            See my work
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M17 8l4 4m0 0l-4 4m4-4H3"
-              />
-            </svg>
-          </Button>
-          <Button href="/about" variant="ghost">
-            About me
-          </Button>
+          <MagneticElement strength={0.2}>
+            <Button href="/projects">
+              See my work
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
+              </svg>
+            </Button>
+          </MagneticElement>
+          <MagneticElement strength={0.2}>
+            <Button href="/about" variant="ghost">
+              About me
+            </Button>
+          </MagneticElement>
         </div>
       </div>
 
@@ -155,7 +164,12 @@ export default function Hero() {
         ref={scrollRef}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-0"
       >
-        <div className="w-[1px] h-12 bg-gradient-to-b from-[var(--color-text-muted)] to-transparent" />
+        <span className="font-[family-name:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
+          Scroll
+        </span>
+        <div className="animate-scroll-bounce">
+          <div className="w-[1px] h-8 bg-gradient-to-b from-[var(--color-accent-primary)] to-transparent" />
+        </div>
       </div>
     </section>
   );

@@ -4,6 +4,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import SmoothScroll from "@/components/layout/SmoothScroll";
 import CustomCursor from "@/components/layout/CustomCursor";
+import MouseGlow from "@/components/ui/MouseGlow";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -45,6 +46,7 @@ export default function RootLayout({
       >
         <SmoothScroll>
           <CustomCursor />
+          <MouseGlow />
           <Navbar />
           <main className="min-h-screen">{children}</main>
           <Footer />

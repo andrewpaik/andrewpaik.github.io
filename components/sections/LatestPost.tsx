@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Tag from "@/components/ui/Tag";
 import ScrollReveal from "@/components/ui/ScrollReveal";
+import TiltCard from "@/components/ui/TiltCard";
 import { blogPosts } from "@/lib/data/blog";
 import { formatDate } from "@/lib/utils";
 
@@ -48,6 +49,7 @@ export default function LatestPost() {
 
         <ScrollReveal>
           <Link href={`/blog/${latest.slug}`} className="group block">
+            <TiltCard intensity={4} glare>
             <div className="relative rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-8 md:p-12 overflow-hidden transition-all duration-500 hover:border-[var(--color-border-hover)]">
               <div className="absolute inset-0 bg-gradient-to-br from-[rgba(123,97,255,0.04)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
@@ -91,6 +93,7 @@ export default function LatestPost() {
                 </span>
               </div>
             </div>
+            </TiltCard>
           </Link>
         </ScrollReveal>
       </div>

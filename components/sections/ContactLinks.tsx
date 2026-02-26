@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Card from "@/components/ui/Card";
+import TiltCard from "@/components/ui/TiltCard";
 
 const contacts = [
   {
@@ -68,6 +69,7 @@ export default function ContactLinks() {
                 ease: [0.25, 0.1, 0.25, 1.0],
               }}
             >
+              <TiltCard intensity={12} glare>
               <Card className="group cursor-pointer flex items-center gap-4">
                 <div className="text-[var(--color-text-muted)] group-hover:text-[var(--color-accent-primary)] transition-colors">
                   {contact.icon}
@@ -94,6 +96,7 @@ export default function ContactLinks() {
                   />
                 </svg>
               </Card>
+              </TiltCard>
             </motion.a>
           ))}
         </div>

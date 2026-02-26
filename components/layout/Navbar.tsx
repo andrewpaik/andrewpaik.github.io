@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import MagneticElement from "@/components/ui/MagneticElement";
 
 const navLinks = [
   { href: "/about", label: "About" },
@@ -49,18 +50,19 @@ export default function Navbar() {
           {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  "link-hover text-sm font-medium transition-colors",
-                  pathname === link.href
-                    ? "text-[var(--color-accent-primary)]"
-                    : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
-                )}
-              >
-                {link.label}
-              </Link>
+              <MagneticElement key={link.href} strength={0.15}>
+                <Link
+                  href={link.href}
+                  className={cn(
+                    "link-hover text-sm font-medium transition-colors",
+                    pathname === link.href
+                      ? "text-[var(--color-accent-primary)]"
+                      : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
+                  )}
+                >
+                  {link.label}
+                </Link>
+              </MagneticElement>
             ))}
           </div>
 
