@@ -1,23 +1,21 @@
 import type { Metadata } from "next";
-import { spaceGrotesk, inter, jetbrainsMono } from "@/lib/fonts";
+import { ibmPlexMono, jetbrainsMono } from "@/lib/fonts";
 import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
+import ConditionalFooter from "@/components/layout/ConditionalFooter";
 import SmoothScroll from "@/components/layout/SmoothScroll";
-import CustomCursor from "@/components/layout/CustomCursor";
-import MouseGlow from "@/components/ui/MouseGlow";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Andrew Paik | AI Developer & Blockchain Researcher",
+    default: "Andrew Paik — Builder, Researcher, Athlete",
     template: "%s | Andrew Paik",
   },
   description:
-    "USC student building at the intersection of AI, blockchain, and real-world impact.",
+    "AI systems, blockchain research, and the discipline to ship. USC '26.",
   metadataBase: new URL("https://andrewpaik.github.io"),
   openGraph: {
     title: "Andrew Paik",
-    description: "AI Developer & Blockchain Researcher",
+    description: "Builder. Researcher. Athlete.",
     url: "https://andrewpaik.github.io",
     siteName: "Andrew Paik",
     locale: "en_US",
@@ -26,7 +24,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Andrew Paik",
-    description: "AI Developer & Blockchain Researcher",
+    description: "Builder. Researcher. Athlete.",
   },
   robots: {
     index: true,
@@ -42,14 +40,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`}
+        className={`${ibmPlexMono.variable} ${jetbrainsMono.variable}`}
       >
         <SmoothScroll>
-          <CustomCursor />
-          <MouseGlow />
           <Navbar />
           <main className="min-h-screen">{children}</main>
-          <Footer />
+          <ConditionalFooter />
         </SmoothScroll>
       </body>
     </html>

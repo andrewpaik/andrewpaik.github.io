@@ -21,21 +21,20 @@ export default function Button({
   onClick,
 }: ButtonProps) {
   const baseStyles =
-    "relative inline-flex items-center gap-2 px-6 py-3 text-sm font-medium rounded-lg overflow-hidden transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent-primary)]";
+    "inline-flex items-center gap-2 font-[family-name:var(--font-display)] text-xs font-medium uppercase tracking-[0.08em] transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-text-primary)]";
 
   const variants = {
     primary: cn(
       baseStyles,
-      "bg-[var(--color-accent-primary)] text-[var(--color-bg-primary)] hover:shadow-[0_0_30px_rgba(0,212,255,0.3)]",
-      "before:absolute before:inset-0 before:bg-white/20 before:translate-x-[-100%] before:transition-transform before:duration-300 hover:before:translate-x-0"
+      "px-5 py-2.5 border border-[var(--color-text-primary)] text-[var(--color-text-primary)] hover:bg-[var(--color-text-primary)] hover:text-[var(--color-bg-primary)]"
     ),
     secondary: cn(
       baseStyles,
-      "border border-[var(--color-border)] text-[var(--color-text-primary)] hover:border-[var(--color-border-hover)] hover:text-[var(--color-accent-primary)]"
+      "px-5 py-2.5 border border-dashed border-[var(--color-border)] text-[var(--color-text-secondary)] hover:border-solid hover:border-[var(--color-border-hover)] hover:text-[var(--color-text-primary)]"
     ),
     ghost: cn(
       baseStyles,
-      "text-[var(--color-text-secondary)] hover:text-[var(--color-accent-primary)]"
+      "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
     ),
   };
 
@@ -50,20 +49,20 @@ export default function Button({
           rel="noopener noreferrer"
           className={styles}
         >
-          <span className="relative z-10">{children}</span>
+          {children}
         </a>
       );
     }
     return (
       <Link href={href} className={styles}>
-        <span className="relative z-10">{children}</span>
+        {children}
       </Link>
     );
   }
 
   return (
     <button onClick={onClick} className={styles}>
-      <span className="relative z-10">{children}</span>
+      {children}
     </button>
   );
 }

@@ -1,80 +1,107 @@
 "use client";
 
-import { useRef, useCallback, useState } from "react";
-import { cn } from "@/lib/utils";
+import { useRef, useCallback, useEffect, useState } from "react";
+import { gsap } from "@/lib/gsap";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 interface TiltCardProps {
   children: React.ReactNode;
   className?: string;
-  intensity?: number;
+  maxTilt?: number;
   glare?: boolean;
 }
 
 export default function TiltCard({
   children,
   className,
-  intensity = 10,
+  maxTilt = 5,
   glare = true,
 }: TiltCardProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [style, setStyle] = useState({
-    transform: "perspective(1000px) rotateX(0deg) rotateY(0deg)",
-    transition: "transform 0.1s ease-out",
-  });
-  const [glareStyle, setGlareStyle] = useState({
-    opacity: 0,
-    background:
-      "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.15) 0%, transparent 60%)",
-  });
+  const cardRef = useRef<HTMLDivElement>(null);
+  const glareRef = useRef<HTMLDivElement>(null);
+  const reduced = useReducedMotion();
+  const [isTouch, setIsTouch] = useState(false);
+
+  useEffect(() => {
+    setIsTouch("ontouchstart" in window || navigator.maxTouchPoints > 0);
+  }, []);
+
+  const disabled = reduced || isTouch;
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent) => {
-      if (!ref.current) return;
-      const rect = ref.current.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width;
-      const y = (e.clientY - rect.top) / rect.height;
+      if (disabled || !cardRef.current) return;
+      const rect = cardRef.current.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
 
-      const rotateX = (0.5 - y) * intensity;
-      const rotateY = (x - 0.5) * intensity;
-
-      setStyle({
-        transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`,
-        transition: "transform 0.1s ease-out",
+      gsap.to(cardRef.current, {
+        rotateY: x * maxTilt * 2,
+        rotateX: -y * maxTilt * 2,
+        duration: 0.3,
+        ease: "power2.out",
       });
 
-      if (glare) {
-        setGlareStyle({
-          opacity: 0.15,
-          background: `radial-gradient(circle at ${x * 100}% ${y * 100}%, rgba(255,255,255,0.2) 0%, transparent 60%)`,
+      if (glare && glareRef.current) {
+        gsap.to(glareRef.current, {
+          opacity: 0.04,
+          x: `${(x + 0.5) * 100}%`,
+          y: `${(y + 0.5) * 100}%`,
+          duration: 0.3,
+          ease: "power2.out",
         });
       }
     },
-    [intensity, glare]
+    [disabled, maxTilt, glare]
   );
 
   const handleMouseLeave = useCallback(() => {
-    setStyle({
-      transform: "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)",
-      transition: "transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)",
+    if (disabled || !cardRef.current) return;
+    gsap.to(cardRef.current, {
+      rotateX: 0,
+      rotateY: 0,
+      duration: 0.6,
+      ease: "power3.out",
     });
-    setGlareStyle((prev) => ({ ...prev, opacity: 0 }));
-  }, []);
+
+    if (glare && glareRef.current) {
+      gsap.to(glareRef.current, {
+        opacity: 0,
+        duration: 0.4,
+        ease: "power3.out",
+      });
+    }
+  }, [disabled, glare]);
 
   return (
     <div
-      ref={ref}
-      className={cn("relative", className)}
+      style={{ perspective: "800px" }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={style}
     >
-      {children}
-      {glare && (
-        <div
-          className="pointer-events-none absolute inset-0 rounded-[inherit] z-10"
-          style={glareStyle}
-        />
-      )}
+      <div
+        ref={cardRef}
+        className={className}
+        style={{ transformStyle: "preserve-3d", position: "relative" }}
+      >
+        {children}
+        {glare && !disabled && (
+          <div
+            ref={glareRef}
+            className="pointer-events-none absolute inset-0 rounded-[inherit] overflow-hidden"
+            style={{ opacity: 0 }}
+            aria-hidden="true"
+          >
+            <div
+              className="absolute w-[200%] h-[200%] -translate-x-1/2 -translate-y-1/2 rounded-full"
+              style={{
+                background:
+                  "radial-gradient(circle, rgba(255,255,255,0.6) 0%, transparent 60%)",
+              }}
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import MagneticElement from "@/components/ui/MagneticElement";
 
 const navLinks = [
   { href: "/about", label: "About" },
@@ -9,9 +12,7 @@ const navLinks = [
 
 const socialLinks = [
   { href: "https://github.com/andrewpaik", label: "GitHub" },
-  { href: "https://linkedin.com/in/andrewpaik", label: "LinkedIn" },
-  { href: "https://twitter.com/andrewpaik", label: "Twitter/X" },
-  { href: "mailto:andrew@example.com", label: "Email" },
+  { href: "https://www.linkedin.com/in/andrew-paik-9b78882b3/", label: "LinkedIn" },
 ];
 
 export default function Footer() {
@@ -24,10 +25,10 @@ export default function Footer() {
             <p className="font-[family-name:var(--font-display)] text-xl font-bold tracking-[-0.02em] mb-3">
               Andrew Paik
             </p>
-            <p className="text-[var(--color-text-muted)] text-sm leading-relaxed max-w-xs">
-              Making things that think.
+            <p className="text-[var(--color-text-secondary)] text-sm leading-relaxed max-w-xs">
+              AI Developer &amp; Builder.
               <br />
-              Based in Los Angeles.
+              Los Angeles, CA.
             </p>
           </div>
 
@@ -56,22 +57,24 @@ export default function Footer() {
             </p>
             <div className="flex flex-col gap-2.5">
               {socialLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[var(--color-text-secondary)] hover:text-[var(--color-accent-primary)] transition-colors text-sm"
-                >
-                  {link.label}
-                </a>
+                <MagneticElement key={link.href} strength={0.12} scale={1.02}>
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors text-sm"
+                  >
+                    {link.label}
+                  </a>
+                </MagneticElement>
               ))}
             </div>
           </div>
         </div>
 
         <div className="border-t border-[var(--color-border)] mt-12 pt-6 flex flex-col md:flex-row justify-between gap-2">
-          <p className="font-[family-name:var(--font-mono)] text-[0.65rem] text-[var(--color-text-muted)]">
+          <p className="font-[family-name:var(--font-mono)] text-[0.65rem] text-[var(--color-text-muted)] flex items-center gap-2">
+            <span className="w-1 h-1 rounded-full bg-[var(--color-text-muted)] animate-pulse-dot" />
             &copy; {new Date().getFullYear()} Andrew Paik
           </p>
           <p className="font-[family-name:var(--font-mono)] text-[0.65rem] text-[var(--color-text-muted)]">

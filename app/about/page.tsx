@@ -3,12 +3,11 @@ import AboutHero from "@/components/sections/AboutHero";
 import Bio from "@/components/sections/Bio";
 import SkillsGrid from "@/components/sections/SkillsGrid";
 import Timeline from "@/components/sections/Timeline";
-import PersonalTouches from "@/components/sections/PersonalTouches";
 
 export const metadata: Metadata = {
   title: "About Me",
   description:
-    "Andrew Paik — USC student, AI developer, and blockchain researcher. The long version.",
+    "Andrew Paik — athlete, AI developer, blockchain researcher. USC '26.",
 };
 
 export default function AboutPage() {
@@ -18,7 +17,6 @@ export default function AboutPage() {
       <Bio />
       <SkillsGrid />
       <Timeline />
-      <PersonalTouches />
     </>
   );
 }

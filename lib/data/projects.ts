@@ -8,6 +8,8 @@ export interface Project {
   role: string;
   year: string;
   featured: boolean;
+  status?: "building" | "complete";
+  thumbnail?: string;
   liveUrl?: string;
   repoUrl?: string;
 }
@@ -17,106 +19,83 @@ export const projects: Project[] = [
     slug: "sprintiq",
     title: "SprintIQ",
     description:
-      "AI biomechanical analysis app using pose estimation and computer vision to optimize athletic performance.",
+      "AI-powered mobile app for sprint biomechanical analysis using pose estimation and personalized coaching feedback.",
     longDescription:
-      "SprintIQ leverages cutting-edge pose estimation and computer vision algorithms to provide real-time biomechanical analysis for athletes. The app captures movement patterns, identifies areas for improvement, and delivers actionable insights to optimize sprint technique, reduce injury risk, and enhance overall athletic performance. Built with a mobile-first approach, it processes video input through custom ML pipelines to extract joint angles, stride metrics, and symmetry scores.",
-    category: ["AI/ML", "Computer Vision"],
-    techStack: ["Python", "MediaPipe", "TensorFlow", "React Native", "FastAPI"],
-    role: "Lead Developer",
-    year: "2024",
-    featured: true,
-  },
-  {
-    slug: "serenity-ai",
-    title: "Serenity AI",
-    description:
-      "Agentic wellness platform with LLM orchestration and RAG for personalized mental health support.",
-    longDescription:
-      "Serenity AI is an agentic wellness platform that orchestrates multiple LLM agents to deliver personalized mental health support. The system uses Retrieval-Augmented Generation (RAG) to ground responses in clinical research, combines conversational AI with structured therapeutic frameworks, and adapts its approach based on user interaction patterns. The multi-agent architecture enables specialized modules for different aspects of wellness -- from guided meditation to cognitive behavioral therapy techniques.",
-    category: ["AI/ML", "Full-Stack"],
-    techStack: [
-      "Python",
-      "LangChain",
-      "OpenAI API",
-      "Pinecone",
-      "Next.js",
-      "PostgreSQL",
-    ],
-    role: "Co-Founder & AI Developer",
-    year: "2024",
-    featured: true,
-  },
-  {
-    slug: "neighborhood",
-    title: "Neighborhood",
-    description:
-      "Social media app combating AI-human relationships by nurturing authentic human connection.",
-    longDescription:
-      "Neighborhood is a social media concept application designed to counter the growing trend of AI-human relationships and digital isolation. The platform prioritizes proximity-based connections, encouraging users to engage with people in their physical community. Features include local event discovery, neighborhood discussion boards, skill-sharing networks, and collaborative projects -- all designed to foster genuine human-to-human interaction in an increasingly AI-mediated world.",
-    category: ["Full-Stack", "Research"],
-    techStack: ["React Native", "Node.js", "Firebase", "Google Maps API"],
+      "SprintIQ is a mobile application that provides automated biomechanical analysis for sprinters. Athletes record themselves running via their phone camera, MediaPipe Pose runs on-device to detect 33 body keypoints per frame (no video leaves the device), and the backend computes 7 biomechanical metrics -- trunk lean, shin angle, knee drive height, ground contact time, foot placement, triple extension, and stride progression. Each metric is classified into quality tiers with plain-language coaching feedback and corrective drill recommendations backed by published sports science research.",
+    category: ["AI/ML", "Computer Vision", "Mobile"],
+    techStack: ["React Native", "FastAPI", "MediaPipe", "Python", "NumPy"],
     role: "Creator & Developer",
-    year: "2024",
+    year: "2025",
     featured: true,
+    status: "building",
   },
   {
     slug: "poker-gto-trainer",
     title: "Poker GTO Trainer",
     description:
-      "Interactive tool training users to play perfect game-theory-optimal poker strategy.",
+      "Real-time poker training with AI-powered GTO strategy analysis and instant feedback on your decisions.",
     longDescription:
       "An interactive training application that teaches users game-theory-optimal (GTO) poker strategy. The trainer presents realistic poker scenarios, evaluates user decisions against mathematically optimal play, and provides detailed explanations of the underlying game theory. Features include hand range visualization, equity calculations, bet sizing analysis, and progressive difficulty levels that adapt to the user's skill development.",
     category: ["AI/ML", "Full-Stack"],
-    techStack: ["Python", "NumPy", "React", "TypeScript", "WebSocket"],
+    techStack: ["React", "FastAPI", "WebSockets", "Python"],
     role: "Developer",
     year: "2024",
-    featured: false,
+    featured: true,
+    thumbnail: "/images/projects/poker.png",
+    repoUrl: "https://github.com/andrewpaik/poker-gto-trainer",
   },
   {
-    slug: "blockchainsc-research",
-    title: "BlockchainSC Research",
+    slug: "neighborhood",
+    title: "Neighborhood",
     description:
-      "Crypto research and investment analysis for a student-run blockchain investment organization.",
+      "Social community platform connecting locals through weekly missions and group activities.",
     longDescription:
-      "Research and investment work for BlockchainSC, USC's premier blockchain investment and research organization. Conducted deep-dive analyses on DeFi protocols, layer-2 scaling solutions, and emerging blockchain ecosystems. Produced research reports on protocol mechanics, tokenomics, risk assessment, and market dynamics. Contributed to investment thesis development and portfolio strategy for the organization's digital asset fund.",
-    category: ["Blockchain", "Research"],
-    techStack: [
-      "Python",
-      "Dune Analytics",
-      "DeFi Protocols",
-      "On-chain Data",
-    ],
-    role: "Research Analyst",
-    year: "2023-2024",
-    featured: false,
+      "Neighborhood is a social community platform designed to counter digital isolation by prioritizing proximity-based connections. The platform encourages users to engage with people in their physical community through weekly missions and group activities. Features include local event discovery, neighborhood discussion boards, skill-sharing networks, and collaborative projects -- all designed to foster genuine human-to-human interaction.",
+    category: ["Full-Stack", "Research"],
+    techStack: ["Next.js", "Firebase", "Tailwind CSS", "TypeScript"],
+    role: "Creator & Developer",
+    year: "2024",
+    featured: true,
+    thumbnail: "/images/projects/neighborhood.png",
+    repoUrl: "https://github.com/andrewpaik/neighborhood",
   },
   {
-    slug: "autonomous-data-analysis",
-    title: "Autonomous Data Analysis",
+    slug: "data-analyst-agent",
+    title: "Data Analyst Agent",
     description:
-      "AI-powered system for automated exploratory data analysis and insight generation.",
+      "Autonomous AI system for end-to-end data analysis with auto-generated reports and visualizations.",
     longDescription:
-      "An autonomous data analysis system that leverages LLM agents to perform exploratory data analysis without human intervention. The system ingests raw datasets, automatically identifies patterns and anomalies, generates visualizations, and produces natural language reports summarizing key findings. Built with a modular architecture that supports various data formats and analysis techniques, from statistical testing to time-series decomposition.",
+      "An autonomous AI system that performs end-to-end data analysis without human intervention. The system ingests raw datasets, automatically identifies patterns and anomalies, generates visualizations, and produces natural language reports summarizing key findings. Built with a modular architecture that supports various data formats and analysis techniques, from statistical testing to time-series decomposition.",
     category: ["AI/ML", "Data Science"],
-    techStack: [
-      "Python",
-      "Pandas",
-      "Scikit-learn",
-      "Plotly",
-      "LangChain",
-      "Streamlit",
-    ],
+    techStack: ["Python", "scikit-learn", "Pandas", "Matplotlib"],
     role: "Developer",
     year: "2024",
-    featured: false,
+    featured: true,
+    thumbnail: "/images/projects/data-analyst.png",
+    repoUrl: "https://github.com/andrewpaik/data-analyst-agent",
+  },
+  {
+    slug: "eye-tracking-app",
+    title: "Eye Tracking App",
+    description:
+      "Desktop eye tracking with webcam-based gaze estimation, calibration, and heatmap visualization.",
+    longDescription:
+      "A desktop eye tracking application using webcam-based gaze estimation powered by MediaPipe. Features include a calibration system for accurate tracking, real-time gaze point visualization, and heatmap generation to analyze viewing patterns. Built with Electron for cross-platform desktop support, enabling accessibility research and UX analysis without specialized hardware.",
+    category: ["AI/ML", "Computer Vision"],
+    techStack: ["Electron", "JavaScript", "MediaPipe"],
+    role: "Developer",
+    year: "2024",
+    featured: true,
+    thumbnail: "/images/projects/eye-tracking.png",
+    repoUrl: "https://github.com/andrewpaik/eye-tracking-app",
   },
 ];
 
 export const categories = [
   "All",
   "AI/ML",
-  "Blockchain",
   "Full-Stack",
+  "Mobile",
   "Data Science",
   "Research",
   "Computer Vision",

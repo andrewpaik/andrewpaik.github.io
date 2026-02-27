@@ -1,25 +1,25 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-bg-primary: #06060A;
-  --color-bg-secondary: #0C0C12;
-  --color-bg-tertiary: #14141C;
-  --color-surface-glass: rgba(255, 255, 255, 0.03);
+  --color-bg-primary: #FAFAFA;
+  --color-bg-secondary: #FFFFFF;
+  --color-bg-tertiary: #F5F5F5;
+  --color-surface-glass: rgba(255, 255, 255, 0.8);
 
-  --color-accent-primary: #00D4FF;
-  --color-accent-secondary: #7B61FF;
-  --color-accent-warm: #FF6B35;
-  --color-accent-glow: rgba(0, 212, 255, 0.2);
+  --color-accent-primary: #1A1A1A;
+  --color-accent-secondary: #1A1A1A;
+  --color-accent-warm: #1A1A1A;
+  --color-accent-glow: transparent;
 
-  --color-text-primary: #EEEEF2;
-  --color-text-secondary: #8A8A9A;
-  --color-text-muted: #4A4A5A;
+  --color-text-primary: #1A1A1A;
+  --color-text-secondary: #6B6B6B;
+  --color-text-muted: #999999;
 
-  --color-border: rgba(255, 255, 255, 0.06);
-  --color-border-hover: rgba(0, 212, 255, 0.3);
+  --color-border: #E5E5E5;
+  --color-border-hover: #CCCCCC;
 
-  --font-display: var(--font-space-grotesk), system-ui, sans-serif;
-  --font-body: var(--font-inter), system-ui, sans-serif;
+  --font-display: var(--font-ibm-plex-mono), ui-monospace, monospace;
+  --font-body: var(--font-ibm-plex-mono), ui-monospace, monospace;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
 }
 
@@ -33,35 +33,27 @@ html {
 }
 
 body {
+  /* Explicitly set font vars on body where next/font variables are available */
+  --font-display: var(--font-ibm-plex-mono), ui-monospace, monospace;
+  --font-body: var(--font-ibm-plex-mono), ui-monospace, monospace;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
   font-family: var(--font-body);
-  font-size: 16px;
-  line-height: 1.6;
+  font-size: 15px;
+  line-height: 1.75;
   background-color: var(--color-bg-primary);
   min-height: 100vh;
-  letter-spacing: -0.01em;
-}
-
-/* Noise/grain texture overlay */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0.025;
-  background-image: url("/images/noise.svg");
-  background-repeat: repeat;
+  letter-spacing: 0em;
 }
 
 /* Selection styling */
 ::selection {
-  background-color: rgba(0, 212, 255, 0.25);
+  background-color: rgba(26, 26, 26, 0.12);
   color: var(--color-text-primary);
 }
 
 /* Focus-visible for accessibility */
 :focus-visible {
-  outline: 2px solid var(--color-accent-primary);
+  outline: 2px solid var(--color-text-primary);
   outline-offset: 2px;
 }
 
@@ -75,12 +67,12 @@ body::after {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-text-muted);
+  background: #CCCCCC;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-secondary);
+  background: #AAAAAA;
 }
 
 /* Reduced motion preference */
@@ -95,48 +87,72 @@ body::after {
   }
 }
 
-/* Section divider gradient */
-.section-divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.2), transparent);
+/* Noise texture overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.025;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* Dark theme — home page 3D experience */
+[data-theme="dark"] {
+  --color-bg-primary: #08080A;
+  --color-bg-secondary: #111114;
+  --color-bg-tertiary: #1A1A1F;
+  --color-surface-glass: rgba(255, 255, 255, 0.03);
+  --color-accent-primary: #00D4FF;
+  --color-accent-secondary: #7B61FF;
+  --color-accent-glow: rgba(0, 212, 255, 0.2);
+  --color-text-primary: #F0F0F5;
+  --color-text-secondary: #8A8A9A;
+  --color-text-muted: #4A4A5A;
+  --color-border: rgba(255, 255, 255, 0.06);
+  --color-border-hover: rgba(0, 212, 255, 0.3);
+}
+
+[data-theme="dark"] ::selection {
+  background-color: rgba(0, 212, 255, 0.2);
+  color: #F0F0F5;
+}
+
+/* Override all fonts to IBM Plex Mono inside dark theme */
+body:has([data-theme="dark"]) {
+  --font-display: var(--font-ibm-plex-mono), ui-monospace, monospace;
+  --font-body: var(--font-ibm-plex-mono), ui-monospace, monospace;
+  --font-mono: var(--font-ibm-plex-mono), ui-monospace, monospace;
 }
 
 /* Heading styles */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
-  letter-spacing: -0.03em;
-  line-height: 1.05;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
 }
 
-/* Label/caption style — more distinctive */
+/* Label/caption style */
 .label {
   font-family: var(--font-mono);
   font-size: 0.7rem;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  color: var(--color-accent-primary);
+  color: var(--color-text-muted);
 }
 
-/* Section number style */
+/* Section number — split-time format */
 .section-number {
   font-family: var(--font-mono);
   font-size: 0.7rem;
   font-weight: 400;
   color: var(--color-text-muted);
   letter-spacing: 0.05em;
-}
-
-/* Glow pulse animation */
-@keyframes pulse-glow {
-  0%, 100% {
-    opacity: 0.4;
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.1);
-  }
-  50% {
-    opacity: 1;
-    box-shadow: 0 0 40px rgba(0, 212, 255, 0.3);
-  }
 }
 
 /* Link underline animation */
@@ -151,68 +167,87 @@ h1, h2, h3, h4, h5, h6 {
   left: 0;
   width: 100%;
   height: 1px;
-  background-color: var(--color-accent-primary);
+  background-color: var(--color-text-primary);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .link-hover:hover::after {
   transform: scaleX(1);
 }
 
-/* Marquee animation */
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-.animate-marquee {
-  animation: marquee 25s linear infinite;
-}
-
-/* Strikethrough reveal */
-.strike-through {
-  text-decoration: line-through;
-  text-decoration-color: var(--color-text-muted);
-  opacity: 0.4;
-}
-
-/* Gradient text */
-.gradient-text {
-  background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-secondary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Scroll indicator bounce */
-@keyframes scroll-bounce {
-  0%, 100% { transform: translateY(0); opacity: 0.5; }
-  50% { transform: translateY(8px); opacity: 1; }
-}
-
-.animate-scroll-bounce {
-  animation: scroll-bounce 2s ease-in-out infinite;
-}
-
-/* Glow pulse for accent dots */
-@keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 4px currentColor; }
-  50% { box-shadow: 0 0 16px currentColor, 0 0 32px currentColor; }
-}
-
-.animate-glow-pulse {
-  animation: glow-pulse 3s ease-in-out infinite;
-}
-
-/* Stagger fade in */
+/* Subtle fade in */
 @keyframes fade-up {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fade-up {
-  animation: fade-up 0.6s ease-out forwards;
+  animation: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   opacity: 0;
+}
+
+/* Ambient pulse — recording indicator */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* Breathing — subtle scale cycle */
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+.animate-breathe {
+  animation: breathe 4s ease-in-out infinite;
+}
+
+/* Subtle divider pulse */
+@keyframes divider-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+}
+
+/* Terminal cursor blink */
+@keyframes terminal-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* 3D scene loading screen */
+.track-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 180px;
+}
+
+.track-loader-bar {
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.track-loader-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00D4FF, #7B61FF);
+  border-radius: 1px;
+  transition: width 0.3s ease-out;
+  box-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
+}
+
+.track-loader-text {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.3);
 }

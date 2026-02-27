@@ -1,33 +1,32 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import Card from "@/components/ui/Card";
 import Tag from "@/components/ui/Tag";
 import type { Project } from "@/lib/data/projects";
 
-// Generate a unique gradient based on project slug
-function getGradient(slug: string) {
-  let hash = 0;
-  for (let i = 0; i < slug.length; i++) {
-    hash = slug.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  const hue1 = Math.abs(hash % 60) + 170; // cyan-blue range
-  const hue2 = Math.abs((hash * 7) % 60) + 250; // purple range
-  return `linear-gradient(135deg, hsla(${hue1}, 80%, 60%, 0.12), hsla(${hue2}, 70%, 55%, 0.08))`;
-}
-
 export default function ProjectCard({ project }: { project: Project }) {
   return (
     <Link href={`/projects/${project.slug}`}>
       <Card className="h-full group cursor-pointer">
-        {/* Thumbnail placeholder */}
-        <div
-          className="w-full h-44 rounded-lg mb-4 flex items-center justify-center relative overflow-hidden"
-          style={{ background: getGradient(project.slug) }}
-        >
-          <span className="font-[family-name:var(--font-display)] text-4xl font-bold text-[var(--color-text-primary)] opacity-10">
-            {project.title}
-          </span>
+        {/* Thumbnail */}
+        <div className="w-full h-44 rounded-lg mb-4 relative overflow-hidden bg-[var(--color-bg-tertiary)]">
+          {project.thumbnail ? (
+            <Image
+              src={project.thumbnail}
+              alt={project.title}
+              fill
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              <span className="font-[family-name:var(--font-display)] text-4xl font-bold text-[var(--color-text-primary)] opacity-10">
+                {project.title}
+              </span>
+            </div>
+          )}
 
           {/* Hover overlay */}
           <div className="absolute inset-0 bg-[var(--color-bg-primary)]/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">

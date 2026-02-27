@@ -2,160 +2,148 @@
 
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
-import dynamic from "next/dynamic";
 import Button from "@/components/ui/Button";
-import MagneticElement from "@/components/ui/MagneticElement";
-
-const HeroScene = dynamic(() => import("@/components/three/HeroScene"), {
-  ssr: false,
-});
+import TextReveal from "@/components/ui/TextReveal";
+import GradientMesh from "@/components/canvas/GradientMesh";
+import { useMouseParallax } from "@/hooks/useMouseParallax";
 
 export default function Hero() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const line1Ref = useRef<HTMLDivElement>(null);
-  const line2Ref = useRef<HTMLDivElement>(null);
-  const line3Ref = useRef<HTMLDivElement>(null);
-  const taglineRef = useRef<HTMLParagraphElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const nameRef = useRef<HTMLDivElement>(null);
+  const descRef = useRef<HTMLParagraphElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const statusRef = useRef<HTMLDivElement>(null);
+
+  const { x: mouseX, y: mouseY } = useMouseParallax({
+    strength: 0.02,
+    container: sectionRef,
+  });
 
   useEffect(() => {
-    const tl = gsap.timeline({ delay: 0.4 });
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ delay: 0.2 });
 
-    tl.fromTo(
-      statusRef.current,
-      { opacity: 0, y: 10 },
-      { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }
-    );
-
-    [line1Ref, line2Ref, line3Ref].forEach((ref, i) => {
-      if (ref.current) {
+      // Name — clip-path reveal from left
+      if (nameRef.current) {
         tl.fromTo(
-          ref.current,
-          { opacity: 0, y: 60, clipPath: "inset(0 0 100% 0)" },
-          {
-            opacity: 1,
-            y: 0,
-            clipPath: "inset(0 0 0% 0)",
-            duration: 0.8,
-            ease: "power3.out",
-          },
-          `-=${i === 0 ? 0 : 0.5}`
+          nameRef.current,
+          { clipPath: "inset(0 100% 0 0)" },
+          { clipPath: "inset(0 0% 0 0)", duration: 0.6, ease: "power4.out" }
         );
       }
-    });
 
-    tl.fromTo(
-      taglineRef.current,
-      { opacity: 0, y: 15 },
-      { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
-      "-=0.3"
-    );
+      // Description — simple fade
+      tl.fromTo(
+        descRef.current,
+        { opacity: 0, y: 8 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" },
+        "-=0.15"
+      );
 
-    tl.fromTo(
-      ctaRef.current,
-      { opacity: 0, y: 15 },
-      { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
-      "-=0.3"
-    );
+      // Stats — staggered fade
+      if (statsRef.current) {
+        const statItems = statsRef.current.querySelectorAll(".stat-item");
+        tl.fromTo(
+          statItems,
+          { opacity: 0 },
+          { opacity: 1, duration: 0.3, stagger: 0.08, ease: "power3.out" },
+          "-=0.1"
+        );
+      }
 
-    tl.fromTo(
-      scrollRef.current,
-      { opacity: 0 },
-      { opacity: 0.5, duration: 1 },
-      "-=0.2"
-    );
+      // CTA buttons — slide up with stagger
+      if (ctaRef.current) {
+        const buttons = ctaRef.current.children;
+        tl.fromTo(
+          buttons,
+          { opacity: 0, y: 12 },
+          { opacity: 1, y: 0, duration: 0.4, stagger: 0.08, ease: "power3.out" },
+          "-=0.1"
+        );
+      }
+
+      // Scroll indicator — delayed fade
+      tl.fromTo(
+        scrollRef.current,
+        { opacity: 0 },
+        { opacity: 0.4, duration: 0.8 },
+        "+=0.4"
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
-      <HeroScene />
+    <section ref={sectionRef} className="relative min-h-screen flex items-center overflow-hidden">
+      <GradientMesh mouseX={mouseX} mouseY={mouseY} />
 
-      {/* Headlight bloom */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,212,255,0.05)_0%,transparent_60%)]" />
-
-      {/* Subtle grid */}
-      <div
-        className="absolute inset-0 opacity-[0.02]"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
-          backgroundSize: "80px 80px",
-        }}
-      />
-
-      <div ref={containerRef} className="relative z-10 mx-auto max-w-7xl px-6 w-full py-32">
-        {/* Status pill */}
-        <div ref={statusRef} className="mb-8 opacity-0">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-secondary)]">
-            <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-            <span className="font-[family-name:var(--font-mono)] text-[0.65rem] text-[var(--color-text-secondary)]">
-              Currently building Serenity AI
-            </span>
-          </div>
+      <div className="relative z-10 mx-auto max-w-7xl px-6 w-full py-32">
+        <div ref={nameRef} style={{ clipPath: "inset(0 100% 0 0)" }}>
+          <h1
+            className="font-[family-name:var(--font-display)] font-bold tracking-[-0.04em] leading-[0.95] mb-4"
+            style={{ fontSize: "clamp(3rem, 8vw, 7rem)" }}
+          >
+            Andrew Paik
+          </h1>
         </div>
 
-        {/* Headline — stacked lines, left-aligned, huge */}
-        <div className="mb-8">
-          <div ref={line1Ref} className="overflow-hidden opacity-0">
-            <h1
-              className="font-[family-name:var(--font-display)] font-bold tracking-[-0.04em] leading-[0.95]"
-              style={{ fontSize: "clamp(3rem, 8vw, 7.5rem)" }}
-            >
-              I make things
-            </h1>
-          </div>
-          <div ref={line2Ref} className="overflow-hidden opacity-0">
-            <h1
-              className="font-[family-name:var(--font-display)] font-bold tracking-[-0.04em] leading-[0.95]"
-              style={{ fontSize: "clamp(3rem, 8vw, 7.5rem)" }}
-            >
-              that <span className="gradient-text">think</span>.
-            </h1>
-          </div>
-          <div ref={line3Ref} className="overflow-hidden opacity-0 mt-2">
-            <p
-              className="font-[family-name:var(--font-display)] font-medium tracking-[-0.02em] text-[var(--color-text-muted)]"
-              style={{ fontSize: "clamp(1.2rem, 2.5vw, 2rem)" }}
-            >
-              And sometimes, they think back.
-            </p>
-          </div>
-        </div>
+        <TextReveal
+          as="p"
+          animation="clipReveal"
+          splitBy="chars"
+          stagger={0.02}
+          delay={0.5}
+          className="font-[family-name:var(--font-display)] text-[var(--color-text-secondary)] tracking-[-0.02em] mb-6"
+          style={{ fontSize: "clamp(1.1rem, 2.5vw, 1.5rem)" }}
+        >
+          Builder. Researcher. Athlete.
+        </TextReveal>
 
         <p
-          ref={taglineRef}
-          className="text-[var(--color-text-secondary)] text-base md:text-lg max-w-lg mb-10 opacity-0 leading-relaxed"
+          ref={descRef}
+          className="text-[var(--color-text-secondary)] text-base max-w-lg mb-8 leading-relaxed opacity-0"
         >
-          Andrew Paik &mdash; AI developer, blockchain researcher, and USC
-          student who&apos;d rather build the future than wait for it.
+          AI systems, blockchain research, and the discipline to ship.
         </p>
 
-        <div ref={ctaRef} className="flex items-center gap-6 opacity-0">
-          <MagneticElement strength={0.2}>
-            <Button href="/projects">
-              See my work
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
-            </Button>
-          </MagneticElement>
-          <MagneticElement strength={0.2}>
-            <Button href="/about" variant="ghost">
-              About me
-            </Button>
-          </MagneticElement>
+        <div
+          ref={statsRef}
+          className="flex flex-wrap items-center gap-4 md:gap-6 mb-10"
+        >
+          {["6 projects", "2 companies", "USC '26"].map((stat, i) => (
+            <span key={stat} className="stat-item flex items-center gap-4 md:gap-6 opacity-0">
+              <span className="font-[family-name:var(--font-mono)] text-xs tracking-[0.05em] text-[var(--color-text-muted)]">
+                {stat}
+              </span>
+              {i < 2 && (
+                <span className="text-[var(--color-border)] text-xs">/</span>
+              )}
+            </span>
+          ))}
+        </div>
+
+        <div ref={ctaRef} className="flex items-center gap-6">
+          <Button href="/projects">
+            See my work
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+              />
+            </svg>
+          </Button>
+          <Button href="/about" variant="ghost">
+            About me
+          </Button>
         </div>
       </div>
 
@@ -167,9 +155,7 @@ export default function Hero() {
         <span className="font-[family-name:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
           Scroll
         </span>
-        <div className="animate-scroll-bounce">
-          <div className="w-[1px] h-8 bg-gradient-to-b from-[var(--color-accent-primary)] to-transparent" />
-        </div>
+        <div className="w-[1px] h-8 bg-gradient-to-b from-[var(--color-text-muted)] to-transparent" />
       </div>
     </section>
   );
